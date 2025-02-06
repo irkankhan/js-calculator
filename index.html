@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200 flex justify-center items-center h-screen">
+    <div class="bg-white p-4 rounded-lg shadow-lg w-72">
+        <div class="bg-gray-100 py-2 px-2 rounded-t-lg ">
+            <p id="inputdata" class="text-right text-2xl  font-semibold">0</p>
+            <!-- <input type="text" value="12"> -->
+        </div>
+        <div class="grid grid-cols-4 gap-4 py-4">
+            <!-- First Row -->
+            <button class="calc-btn col-span-3 bg-red-400 text-white" onclick="cleardata()">C</button>
+            <button class="calc-btn bg-yellow-400" onclick="operatorClick('÷')">÷</button>
+
+            <!-- Second Row -->
+            <button class="calc-btn" onclick="numbersclick(7)">7</button>
+            <button class="calc-btn" onclick="numbersclick(8)">8</button>
+            <button class="calc-btn" onclick="numbersclick(9)">9</button>
+            <button class="calc-btn bg-yellow-400" onclick="operatorClick('×')">×</button>
+
+            <!-- Third Row -->
+            <button class="calc-btn" onclick="numbersclick(4)">4</button>
+            <button class="calc-btn" onclick="numbersclick(5)">5</button>
+            <button class="calc-btn" onclick="numbersclick(6)">6</button>
+            <button class="calc-btn bg-yellow-400" onclick="operatorClick('-')">-</button>
+
+            <!-- Fourth Row -->
+            <button class="calc-btn" onclick="numbersclick(1)">1</button>
+            <button class="calc-btn" onclick="numbersclick(2)">2</button>
+            <button class="calc-btn" onclick="numbersclick(3)">3</button>
+            <button class="calc-btn bg-yellow-400" onclick="operatorClick('+')">+</button>
+
+            <!-- Fifth Row -->
+            <button class="calc-btn col-span-2" onclick="numbersclick(0)">0</button>
+            <button class="calc-btn" onclick="numbersclick('.')">.</button>
+            <button class="calc-btn bg-green-400" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+
+        let currentInput = '';
+        let previousInput = '';
+        let operator = null;
+
+
+        function numbersclick(number){
+          if(previousInput <= 0){
+
+            const input1 = document.getElementById('inputdata');
+            input1.innerText = '';
+          }
+
+          currentInput += number;
+          console.log(currentInput);
+          const screen = document.getElementById('inputdata');
+          screen.innerText += currentInput || '0';
+
+        }
+
+       
+        
+        function operatorClick(op){
+        
+        operator = op;
+        const screen = document.getElementById('inputdata');
+        screen.innerText += operator;
+        previousInput = currentInput;
+        currentInput = '';
+      }
+
+      function calculate() {
+        
+            if (operator === null || currentInput === '') return;
+            let result; //initilization
+            const prev = parseFloat(previousInput); 
+    const current = parseFloat(currentInput);
+
+            switch (operator) {
+                case '+':
+                    result = prev + current;
+                    break;
+                case '-':
+                    result = prev - current;
+                    break;
+                case '×':
+                    result = prev * current;
+                    break;
+                case '÷':
+                    result = prev / current;
+                    break;
+                default:
+                    return;
+            }
+            const screen = document.getElementById('inputdata');
+            screen.innerText = result;
+            operator = null;
+            previousInput = ''; 
+            currentInput = '';
+          }
+
+      function cleardata() {
+          currentInput = '';
+          previousInput = '';
+          operator = null;
+          const screen = document.getElementById('inputdata');
+          screen.innerText = '0'; 
+      }
+
+
+       
+    </script>
+</body>
+</html>
